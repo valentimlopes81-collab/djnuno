@@ -97,16 +97,20 @@ function initLightbox() {
   const lightbox = document.querySelector(".lightbox");
   if (!items.length || !lightbox) return;
   const labelEl = lightbox.querySelector(".lightbox-label");
+  const boxEl = lightbox.querySelector(".lightbox-box");
   const closeBtn = lightbox.querySelector(".lightbox-close");
 
-  const open = (label) => {
+  const open = (label, photoVar) => {
     if (labelEl) labelEl.textContent = label;
+    if (boxEl) boxEl.style.setProperty("--photo", photoVar && photoVar.trim() ? photoVar : "none");
     lightbox.classList.add("is-open");
   };
   const close = () => lightbox.classList.remove("is-open");
 
   items.forEach((item) => {
-    item.addEventListener("click", () => open(item.dataset.label || "Nuno Garcia"));
+    item.addEventListener("click", () =>
+      open(item.dataset.label || "Nuno Garcia", item.style.getPropertyValue("--photo"))
+    );
   });
   closeBtn?.addEventListener("click", close);
   lightbox.addEventListener("click", (e) => {

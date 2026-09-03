@@ -12,6 +12,27 @@ python3 -m http.server 8000
 
 Depois abra `http://localhost:8000` no browser.
 
+## Onde adicionar as fotos (sem precisar de tocar em código)
+
+Todos os espaços de foto do site já estão prontos a usar — basta colocar o ficheiro **com o nome exato** na pasta certa, dentro de `images/`, e a foto aparece automaticamente (sem editar HTML/CSS). Enquanto o ficheiro não existir, esse espaço mostra um fundo escuro elegante em vez de aparecer partido.
+
+```
+images/
+  logos/            → ficheiro do logótipo original (ver nota abaixo)
+  fotos/
+    hero/            → hero-dj.jpg              (banner principal, 1 foto)
+    bio/             → retrato.jpg              (biografia, 1 foto)
+    galeria/         → 18 espaços — ver images/fotos/galeria/README.md para a lista de nomes
+    eventos/         → carrossel das 3 secções de eventos.html — casamentos-01.jpg a 05,
+                        corporativos-01.jpg a 05, sociais-01.jpg a 05
+    servicos/        → carrossel das 3 secções de servicos.html — dj-musico-01.jpg a 05,
+                        dj-cantora-01.jpg a 05, audiovisuais-01.jpg a 05
+```
+
+Cada pasta tem o seu próprio `README.md` com a lista exata de nomes de ficheiro esperados.
+
+**Sobre o logótipo:** não recebi o ficheiro que enviou — nesta sessão remota, imagens coladas na conversa não chegam até mim como ficheiro (só o texto chega). O logótipo do cabeçalho/rodapé está feito em CSS puro (fiel ao original) precisamente por isso. Para usar o ficheiro real: adicione-o a este repositório em `images/logos/` (por commit direto no GitHub, ou através de outra sessão que consiga aceder ao ficheiro) e depois avise — assim que o ficheiro estiver no repositório eu troco o logótipo em todas as páginas.
+
 ## O que já está pronto
 
 - Design completo (paleta preto/dourado, tipografia forte, animações de scroll).
@@ -19,39 +40,31 @@ Depois abra `http://localhost:8000` no browser.
 - Hero da página principal com o menu flutuante (transparente) sobreposto a uma foto de fundo, sem botões "Início" nem "Ver Galeria".
 - Biografia real, lista de espaços onde já atuou, e as 3 áreas de evento (Casamentos, Corporativos, Sociais) em `eventos.html`.
 - Serviços reais em `servicos.html`: Dupla DJ + Músico, Dupla DJ + Cantora, Audiovisuais e o catálogo completo da Get Wild Eventos.
+- Carrossel infinito de fotos (auto-scroll, pausa ao passar o rato) à direita de cada uma das 3 secções em `eventos.html` e `servicos.html`.
+- Galeria com 18 espaços de foto (um por cada espaço/venue real + genéricos), filtros por categoria e lightbox — a foto certa abre automaticamente ao clicar.
 - Contactos reais (telefone e email) já ligados em todo o site a partir de `js/main.js`.
 - Formulário de orçamento em `contactos.html` (abre o cliente de email do visitante com os dados preenchidos).
 - Botão flutuante de WhatsApp e barra fixa de "Pedir Orçamento" no telemóvel.
-- Filtros e lightbox na galeria.
 
 ## O que ainda falta para o site ficar 100% completo
 
-1. **Foto do hero** — não foi possível receber nenhuma foto real do DJ nesta sessão. Coloque a foto em `images/hero-dj.jpg` (ver comentário em `index.html` acima da secção `<!-- HERO -->` e a regra `.hero-photo` em `css/style.css`) — o site já está pronto para a usar, e mostra um fundo escuro elegante como reserva enquanto não é adicionada.
-2. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
-3. **Fotografias da galeria e do retrato da biografia** — continuam a ser placeholders visuais (ícone + gradiente), já com legendas de espaços reais onde o Nuno já atuou. Para trocar por fotos reais:
-   - Coloque as fotos em `images/`.
-   - Em cada `.gallery-item`, `.bio-portrait`, etc., substitua o bloco `<div class="gallery-ph">...</div>` por `<img src="images/o-seu-ficheiro.jpg" alt="...">`.
-4. **Logótipo em ficheiro** — se preferir usar o ficheiro de logo original em vez da versão em CSS, substitua o bloco:
-   ```html
-   <span class="logo-word">NUNO</span>
-   <span class="logo-x"></span>
-   <span class="logo-word">GARCIA</span>
-   <span class="logo-stripes"></span>
-   ```
-   por `<img src="images/logo.png" alt="Nuno Garcia">` em todos os locais onde aparece (cabeçalho e rodapé de cada página).
-5. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
-6. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.
+1. **Fotos** — ver secção acima. É o maior "falta" do site neste momento: nenhum espaço de foto tem ainda um ficheiro real.
+2. **Logótipo em ficheiro** — ver nota acima.
+3. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
+4. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
+5. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.
 
 ## Estrutura
 
 ```
-index.html        → Início + biografia (scroll)
-eventos.html       → Casamentos, Eventos Corporativos, Eventos Sociais + parceria Get Wild
-servicos.html      → Dupla DJ+Músico, Dupla DJ+Cantora, Audiovisuais, Outros Serviços
-galeria.html        → Galeria de fotos (com filtros)
+index.html        → Início: hero + biografia (scroll) + Duplas & Parcerias + Galeria (teaser)
+eventos.html       → Casamentos, Eventos Corporativos, Eventos Sociais (com carrossel) + parceria Get Wild
+servicos.html      → Dupla DJ+Músico, Dupla DJ+Cantora, Audiovisuais (com carrossel), Outros Serviços
+galeria.html        → Galeria de fotos (18 espaços, filtros, lightbox)
 contactos.html      → Formulário de orçamento + contactos
 css/style.css        → Todo o design do site
-js/main.js            → Menu, animações, formulário, config de contactos (SITE_CONFIG)
+js/main.js            → Menu, animações, formulário, lightbox, config de contactos (SITE_CONFIG)
+images/               → Ver "Onde adicionar as fotos" acima
 ```
 
 ## Publicar em produção (Vercel)

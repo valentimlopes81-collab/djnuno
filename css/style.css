@@ -345,7 +345,7 @@ section{ position: relative; z-index: 1; }
 .hero-photo{
   position: absolute; inset: 0;
   background:
-    url('../images/hero-dj.jpg') center 22% / cover no-repeat,
+    url('../images/fotos/hero/hero-dj.jpg') center 22% / cover no-repeat,
     radial-gradient(ellipse 65% 55% at 50% 15%, #2a2318 0%, #14110b 55%, #0a0a0a 100%),
     linear-gradient(160deg, #1a160f 0%, #0a0a0a 70%);
 }
@@ -457,33 +457,26 @@ section{ position: relative; z-index: 1; }
 }
 @media (max-width: 900px){ .bio-grid{ grid-template-columns: 1fr; gap: 44px; } }
 
+/* Reusable "photo, or an elegant fallback if the file isn't there yet"
+   layer. Set the real photo per-element with style="--photo:url('...')" —
+   a missing/404 file just falls through to the gradient beneath it, so a
+   slot can reference its final image path before the file exists. */
+.ph-bg{
+  background-image:
+    var(--photo, none),
+    radial-gradient(circle, rgba(201,162,75,.14) 1px, transparent 1px),
+    linear-gradient(155deg, #1c1a14 0%, #0a0a0a 60%, #000 100%);
+  background-size: cover, 22px 22px, cover;
+  background-position: center, center, center;
+  background-repeat: no-repeat, repeat, no-repeat;
+}
+
 .bio-portrait{
   position: relative;
   aspect-ratio: 4/5;
   border-radius: var(--radius);
   overflow: hidden;
-  background:
-    linear-gradient(155deg, #1c1a14 0%, #0a0a0a 55%, #000 100%);
   border: 1px solid var(--line);
-}
-.bio-portrait::before{
-  content: "";
-  position: absolute; inset: 0;
-  background-image: radial-gradient(circle, rgba(201,162,75,.18) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
-.bio-portrait .portrait-mark{
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column;
-  gap: 14px;
-}
-.bio-portrait .portrait-mark svg{ width: 64px; height: 64px; opacity: .55; stroke: var(--accent); }
-.bio-portrait .portrait-mark span{
-  font-size: .68rem;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--text-faint);
 }
 .bio-portrait .frame-corner{
   position: absolute; width: 34px; height: 34px;
@@ -575,7 +568,52 @@ section{ position: relative; z-index: 1; }
 }
 
 /* Event / service packages (eventos.html, servicos.html) */
+.package-row{
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 48px;
+  align-items: start;
+}
+@media (max-width: 980px){
+  .package-row{ grid-template-columns: 1fr; }
+}
 .package{ max-width: 780px; }
+@media (max-width: 980px){ .package{ max-width: none; } }
+
+/* Infinite auto-scrolling photo carousel (right of each package section) */
+.package-carousel{
+  position: sticky;
+  top: calc(var(--header-h) + 24px);
+  height: 560px;
+  overflow: hidden;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  mask-image: linear-gradient(180deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+@media (max-width: 980px){
+  .package-carousel{ position: static; height: 240px; }
+}
+.carousel-track{
+  display: flex;
+  flex-direction: column;
+  animation: carouselScroll 26s linear infinite;
+}
+.package-carousel:hover .carousel-track{ animation-play-state: paused; }
+.carousel-slide{
+  flex: none;
+  width: 100%;
+  height: 280px;
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 980px){ .carousel-slide{ height: 240px; } }
+@keyframes carouselScroll{
+  from{ transform: translateY(0); }
+  to{ transform: translateY(-50%); }
+}
+@media (prefers-reduced-motion: reduce){
+  .carousel-track{ animation: none; }
+}
 .package-text{ color: var(--text-muted); font-size: 1.02rem; margin: 18px 0; max-width: 68ch; }
 .package-label{
   display: block;
@@ -681,15 +719,8 @@ section{ position: relative; z-index: 1; }
 }
 .gallery-item.tall{ grid-row: span 2; }
 .gallery-item.wide{ grid-column: span 2; }
-.gallery-ph{
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 10px;
-  transition: transform .5s var(--ease);
-}
-.gallery-item:hover .gallery-ph{ transform: scale(1.06); }
-.gallery-ph svg{ width: 30px; height: 30px; stroke: var(--accent); opacity: .7; }
-.gallery-ph span{ font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--text-faint); }
+.gallery-item.ph-bg{ transition: background-size .5s var(--ease); }
+.gallery-item.ph-bg:hover{ background-size: 112%, 22px 22px, cover; }
 .gallery-item .gi-label{
   position: absolute; left: 0; right: 0; bottom: 0;
   padding: 14px 16px;
@@ -721,15 +752,22 @@ section{ position: relative; z-index: 1; }
 }
 .lightbox.is-open{ opacity: 1; pointer-events: auto; }
 .lightbox-box{
+  position: relative;
   width: min(640px, 86vw);
   aspect-ratio: 4/5;
   border: 1px solid var(--line-strong);
-  display: flex; align-items: center; justify-content: center;
-  flex-direction: column; gap: 14px;
-  background: linear-gradient(155deg, #1c1a14 0%, #0a0a0a 60%);
+  border-radius: var(--radius);
+  overflow: hidden;
 }
-.lightbox-box svg{ width: 50px; height: 50px; stroke: var(--accent); }
-.lightbox-box span{ letter-spacing: .12em; text-transform: uppercase; font-size: .72rem; color: var(--text-faint); }
+.lightbox-box .lightbox-label{
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 20px 22px;
+  background: linear-gradient(0deg, rgba(0,0,0,.8), transparent);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: .78rem;
+  color: var(--text);
+}
 .lightbox-close{
   position: absolute; top: 26px; right: 28px;
   width: 44px; height: 44px;
