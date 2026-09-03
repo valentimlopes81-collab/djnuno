@@ -4,12 +4,14 @@
 
 /* ---------- Central contact config — edit once, used across the site ---------- */
 const SITE_CONFIG = {
-  email: "geral@djnunogarcia.com",
-  phone: "+351 000 000 000",
-  whatsappNumber: "351000000000", // digits only, country code first, no + or spaces
+  email: "info@djnunogarcia.com",
+  phone: "+351 918 731 114",
+  whatsappNumber: "351918731114", // digits only, country code first, no + or spaces
   instagram: "https://instagram.com/djnunogarcia",
   facebook: "https://facebook.com/djnunogarcia",
-  city: "Lisboa, Portugal"
+  city: "Lisboa, Portugal",
+  // TODO: set the real Get Wild Eventos website URL here once confirmed.
+  getwildUrl: ""
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -17,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileNav();
   initActiveNavLink();
   initReveal();
-  initTestimonialDrag();
   initLightbox();
   initGalleryFilter();
   initContactForm();
@@ -87,25 +88,6 @@ function initReveal() {
       el.classList.add("reveal-armed");
       io.observe(el);
     }
-  });
-}
-
-/* ---------- Testimonials: enable mouse-drag scrolling on desktop ---------- */
-function initTestimonialDrag() {
-  const track = document.querySelector(".testi-track");
-  if (!track) return;
-  let isDown = false, startX, scrollLeft;
-  track.addEventListener("mousedown", (e) => {
-    isDown = true;
-    startX = e.pageX - track.offsetLeft;
-    scrollLeft = track.scrollLeft;
-  });
-  ["mouseleave", "mouseup"].forEach((evt) => track.addEventListener(evt, () => (isDown = false)));
-  track.addEventListener("mousemove", (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - track.offsetLeft;
-    track.scrollLeft = scrollLeft - (x - startX) * 1.4;
   });
 }
 
@@ -209,6 +191,14 @@ function initWhatsAppLinks() {
   document.querySelectorAll("[data-instagram-link]").forEach((el) => (el.href = SITE_CONFIG.instagram));
   document.querySelectorAll("[data-facebook-link]").forEach((el) => (el.href = SITE_CONFIG.facebook));
   document.querySelectorAll("[data-city]").forEach((el) => (el.textContent = SITE_CONFIG.city));
+  document.querySelectorAll("[data-getwild-link]").forEach((el) => {
+    if (SITE_CONFIG.getwildUrl) {
+      el.href = SITE_CONFIG.getwildUrl;
+    } else {
+      el.removeAttribute("target");
+      el.addEventListener("click", (e) => e.preventDefault());
+    }
+  });
 }
 
 function initFooterYear() {

@@ -16,23 +16,22 @@ Depois abra `http://localhost:8000` no browser.
 
 - Design completo (paleta preto/dourado, tipografia forte, animações de scroll).
 - Logótipo recriado em CSS puro (texto + "X" + risca diagonal), sem depender de nenhum ficheiro de imagem.
-- As 4 páginas pedidas + biografia em scroll na página principal.
+- Hero da página principal com o menu flutuante (transparente) sobreposto a uma foto de fundo, sem botões "Início" nem "Ver Galeria".
+- Biografia real, lista de espaços onde já atuou, e as 3 áreas de evento (Casamentos, Corporativos, Sociais) em `eventos.html`.
+- Serviços reais em `servicos.html`: Dupla DJ + Músico, Dupla DJ + Cantora, Audiovisuais e o catálogo completo da Get Wild Eventos.
+- Contactos reais (telefone e email) já ligados em todo o site a partir de `js/main.js`.
 - Formulário de orçamento em `contactos.html` (abre o cliente de email do visitante com os dados preenchidos).
 - Botão flutuante de WhatsApp e barra fixa de "Pedir Orçamento" no telemóvel.
 - Filtros e lightbox na galeria.
 
-## O que precisa de substituir antes de publicar
+## O que ainda falta para o site ficar 100% completo
 
-Como não houve acesso à internet nem ao ficheiro do logótipo durante a criação deste site, todo o conteúdo é **placeholder de alta qualidade**, pronto a editar:
-
-1. **Contactos** — edite `js/main.js`, no topo (`SITE_CONFIG`): email, telefone, número de WhatsApp, Instagram, Facebook e cidade. Estes valores alimentam automaticamente o cabeçalho, rodapé, página de contactos e botão de WhatsApp em todas as páginas.
-2. **Biografia** — texto em `index.html`, secção `id="biografia"`. Substitua pelo texto real (e números reais de anos de experiência / eventos realizados).
-3. **Eventos** — datas e locais em `eventos.html` e na pré-visualização em `index.html`.
-4. **Serviços e preços** — ajuste os textos e listas em `servicos.html` conforme os pacotes reais.
-5. **Fotografias** — todas as imagens são placeholders visuais (ícone + gradiente). Para trocar por fotos reais:
+1. **Foto do hero** — não foi possível receber nenhuma foto real do DJ nesta sessão. Coloque a foto em `images/hero-dj.jpg` (ver comentário em `index.html` acima da secção `<!-- HERO -->` e a regra `.hero-photo` em `css/style.css`) — o site já está pronto para a usar, e mostra um fundo escuro elegante como reserva enquanto não é adicionada.
+2. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
+3. **Fotografias da galeria e do retrato da biografia** — continuam a ser placeholders visuais (ícone + gradiente), já com legendas de espaços reais onde o Nuno já atuou. Para trocar por fotos reais:
    - Coloque as fotos em `images/`.
    - Em cada `.gallery-item`, `.bio-portrait`, etc., substitua o bloco `<div class="gallery-ph">...</div>` por `<img src="images/o-seu-ficheiro.jpg" alt="...">`.
-6. **Logótipo real** — se preferir usar o ficheiro de logo original em vez da versão em CSS, substitua o bloco:
+4. **Logótipo em ficheiro** — se preferir usar o ficheiro de logo original em vez da versão em CSS, substitua o bloco:
    ```html
    <span class="logo-word">NUNO</span>
    <span class="logo-x"></span>
@@ -40,16 +39,21 @@ Como não houve acesso à internet nem ao ficheiro do logótipo durante a criaç
    <span class="logo-stripes"></span>
    ```
    por `<img src="images/logo.png" alt="Nuno Garcia">` em todos os locais onde aparece (cabeçalho e rodapé de cada página).
-7. **Testemunhos** — substitua os exemplos em `index.html` por avaliações reais de clientes.
+5. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
+6. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.
 
 ## Estrutura
 
 ```
 index.html        → Início + biografia (scroll)
-eventos.html       → Agenda de eventos
-servicos.html      → Serviços e pacotes
+eventos.html       → Casamentos, Eventos Corporativos, Eventos Sociais + parceria Get Wild
+servicos.html      → Dupla DJ+Músico, Dupla DJ+Cantora, Audiovisuais, Outros Serviços
 galeria.html        → Galeria de fotos (com filtros)
 contactos.html      → Formulário de orçamento + contactos
 css/style.css        → Todo o design do site
-js/main.js            → Menu, animações, formulário, config de contactos
+js/main.js            → Menu, animações, formulário, config de contactos (SITE_CONFIG)
 ```
+
+## Publicar em produção (Vercel)
+
+Este é um site estático puro — não precisa de build nem de configuração especial no Vercel: basta ligar este repositório GitHub a um projeto Vercel (Framework Preset: "Other"/nenhum, sem build command, output = raiz do repositório). Depois disso, cada push/merge para o branch de produção (normalmente `main`) faz deploy automático.

@@ -238,16 +238,18 @@ section{ position: relative; z-index: 1; }
   transition: border-color .3s var(--ease), height .3s var(--ease);
 }
 /* Blur lives on a pseudo-element (not the header itself) so backdrop-filter
-   doesn't create a new containing block for the fixed-position mobile nav panel. */
+   doesn't create a new containing block for the fixed-position mobile nav panel.
+   Transparent by default so the header floats over the hero photo; gains a
+   dark blurred backing once the page scrolls past it. */
 .site-header::before{
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: rgba(10,10,10,.55);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  transition: background .3s var(--ease);
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: background .3s var(--ease), backdrop-filter .3s var(--ease);
 }
 .site-header.is-scrolled{
   border-bottom-color: var(--line);
@@ -255,6 +257,8 @@ section{ position: relative; z-index: 1; }
 }
 .site-header.is-scrolled::before{
   background: rgba(9,9,9,.86);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 .site-header .container{
   display: flex;
@@ -333,23 +337,30 @@ section{ position: relative; z-index: 1; }
   flex-direction: column;
   justify-content: center;
   position: relative;
-  padding-top: var(--header-h);
-  background:
-    radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,162,75,.14), transparent 60%),
-    linear-gradient(180deg, #050505 0%, #0a0a0a 60%, #0a0a0a 100%);
+  margin-top: calc(var(--header-h) * -1);
   overflow: hidden;
 }
-.hero-noise{
+/* Full-bleed photo. Drop the real photo at images/hero-dj.jpg — the gradients
+   underneath are only a fallback shown if that file isn't there. */
+.hero-photo{
   position: absolute; inset: 0;
-  background-image: radial-gradient(rgba(255,255,255,.06) 1px, transparent 1px);
-  background-size: 26px 26px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black, transparent 70%);
-  pointer-events: none;
+  background:
+    url('../images/hero-dj.jpg') center 22% / cover no-repeat,
+    radial-gradient(ellipse 65% 55% at 50% 15%, #2a2318 0%, #14110b 55%, #0a0a0a 100%),
+    linear-gradient(160deg, #1a160f 0%, #0a0a0a 70%);
+}
+.hero-overlay{
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg,
+    rgba(5,5,5,.78) 0%,
+    rgba(5,5,5,.30) 30%,
+    rgba(5,5,5,.40) 62%,
+    rgba(5,5,5,.94) 100%);
 }
 .hero-content{
   position: relative;
   text-align: center;
-  padding: 60px 28px 40px;
+  padding: calc(var(--header-h) + 40px) 28px 40px;
   max-width: 980px;
   margin: 0 auto;
 }
@@ -515,6 +526,88 @@ section{ position: relative; z-index: 1; }
   color: var(--text-faint);
 }
 
+/* Venues strip */
+.venues{
+  margin-top: 60px;
+  padding-top: 44px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+.venues-label{
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 22px;
+}
+.venues-list{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px 14px;
+}
+.venues-list span{
+  font-size: .82rem;
+  letter-spacing: .03em;
+  color: var(--text-muted);
+  padding: 9px 18px;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* Reusable pill chips (event/service "adaptado a" lists, Get Wild catalog) */
+.chip-list{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: 16px 0 32px;
+}
+.chip-list span{
+  font-size: .8rem;
+  letter-spacing: .02em;
+  color: var(--text-muted);
+  padding: 8px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* Event / service packages (eventos.html, servicos.html) */
+.package{ max-width: 780px; }
+.package-text{ color: var(--text-muted); font-size: 1.02rem; margin: 18px 0; max-width: 68ch; }
+.package-label{
+  display: block;
+  font-size: .72rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-top: 8px;
+}
+.package-list{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 40px;
+  margin: 24px 0 34px;
+}
+.package-list li{
+  color: var(--text-muted);
+  font-size: .96rem;
+  padding: 10px 0 10px 20px;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.package-list li::before{
+  content: "";
+  position: absolute; left: 0; top: 1.15em;
+  width: 8px; height: 1px;
+  background: var(--accent);
+}
+@media (max-width: 640px){
+  .package-list{ grid-template-columns: 1fr; }
+}
+
 /* ==========================================================================
    Cards: services / events / gallery
    ========================================================================== */
@@ -569,48 +662,6 @@ section{ position: relative; z-index: 1; }
   margin-bottom: 6px;
 }
 .card-icon svg{ width: 20px; height: 20px; stroke: var(--accent); }
-
-/* ==========================================================================
-   Events list / timeline
-   ========================================================================== */
-.events-list{ border-top: 1px solid var(--line); }
-.event-row{
-  display: grid;
-  grid-template-columns: 120px 1fr auto auto;
-  align-items: center;
-  gap: 24px;
-  padding: 28px 0;
-  border-bottom: 1px solid var(--line);
-  transition: background .25s;
-}
-.event-row:hover{ background: rgba(255,255,255,.02); }
-.event-date{
-  display: flex; flex-direction: column; align-items: flex-start;
-  font-family: var(--font-display);
-  color: var(--accent);
-  line-height: 1;
-}
-.event-date .day{ font-size: 2rem; }
-.event-date .month{ font-size: .78rem; letter-spacing: .12em; color: var(--text-faint); margin-top: 6px; text-transform: uppercase; font-family: var(--font-body); font-weight: 700; }
-.event-info h4{
-  font-size: 1.08rem; font-weight: 700; margin-bottom: 6px;
-}
-.event-info span{ color: var(--text-muted); font-size: .88rem; }
-.event-tag{
-  font-size: .68rem;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  padding: 7px 14px;
-  border: 1px solid var(--line-strong);
-  border-radius: 20px;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-.event-tag.is-open{ color: var(--accent); border-color: var(--accent); }
-@media (max-width: 720px){
-  .event-row{ grid-template-columns: 70px 1fr; row-gap: 14px; }
-  .event-row .btn{ grid-column: 1 / -1; }
-}
 
 /* ==========================================================================
    Gallery
@@ -688,39 +739,6 @@ section{ position: relative; z-index: 1; }
   background: transparent; color: var(--text); font-size: 1.2rem;
 }
 .lightbox-close:hover{ border-color: var(--accent); color: var(--accent); }
-
-/* ==========================================================================
-   Testimonials
-   ========================================================================== */
-.testimonials{ background: var(--bg-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.testi-track{
-  display: flex;
-  gap: 24px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 8px;
-  scrollbar-width: none;
-}
-.testi-track::-webkit-scrollbar{ display: none; }
-.testi-card{
-  scroll-snap-align: start;
-  flex: 0 0 min(420px, 85vw);
-  background: var(--surface-solid);
-  border: 1px solid var(--line);
-  padding: 34px 30px;
-  border-radius: var(--radius);
-}
-.testi-stars{ color: var(--accent); letter-spacing: .2em; font-size: .9rem; margin-bottom: 18px; }
-.testi-card p{ color: var(--text-muted); font-size: 1rem; margin-bottom: 22px; }
-.testi-author{ display: flex; align-items: center; gap: 12px; }
-.testi-avatar{
-  width: 40px; height: 40px; border-radius: 50%;
-  background: linear-gradient(140deg, var(--accent), #7a5f1f);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--font-display); color: #0a0a0a; font-size: .95rem;
-}
-.testi-author strong{ display: block; font-size: .9rem; }
-.testi-author span{ font-size: .78rem; color: var(--text-faint); }
 
 /* ==========================================================================
    CTA banner
