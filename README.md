@@ -50,12 +50,13 @@ Cada pasta tem o seu próprio `README.md` com a lista exata de nomes de ficheiro
 - Animação de brilho + zoom ao passar o rato (ou focar) nos botões tipo "pill" (a lista de espaços e os catálogos da Get Wild Eventos).
 - Rodapé simplificado: só logótipo/redes sociais e contacto (sem as colunas de navegação e serviços repetidas).
 - Página `portfolio.html`, fora do menu principal (só acessível pelo botão "Portfólio Completo"), com duas secções — **Portfólio Eventos** (restaurantes, hotéis e eventos de marca) e **Portfólio Clubbing** (clubs por década) — cada uma com um espaço de logótipos para os parceiros/espaços mais importantes.
+- **8 logótipos reais já colocados**: Mome Lisboa, Cuá Cuá Algarve, Bliss Algarve, Casino Estoril, Praia no Parque, Praia Verde, Tamariz Estoril e Lust in Rio — com fundo removido e, nos que estavam a preto, convertidos para branco para ficarem visíveis no tema escuro do site. Aparecem em "Já atuou em espaços como" (`index.html`) e em "Portfólio Clubbing" (`portfolio.html`); os espaços sem logótipo ainda foram removidos dessas duas listas até termos o ficheiro.
 
 ## O que ainda falta para o site ficar 100% completo
 
 1. **Fotos** — ver secção acima. É o maior "falta" do site neste momento: nenhum espaço de foto tem ainda um ficheiro real.
-2. **Logótipo em ficheiro** — ver nota acima.
-3. **Logótipos dos clubs/espaços** — quando tiver os PNGs em `images/logos/clubs/`, avise para trocarmos os botões de texto ("Main Lisboa", "Kapital Lisboa", etc.) por estes logótipos, na página principal e em `portfolio.html`.
+2. **Logótipo do DJ em ficheiro** — ver nota acima.
+3. **Restantes logótipos de clubs/hotéis** — 8 já estão no site (ver acima); faltam os das secções "Portfólio Eventos" (Tivoli, Intercontinental, Corinthia, Grupo Pestana, Grupo Sana) e mais alguns clubs (Main Lisboa, Kapital, Nuts Club, News, BBC, Paradise Garage) — ver `images/logos/clubs/README.md` para a lista completa e como enviar mais.
 4. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
 5. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
 6. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.

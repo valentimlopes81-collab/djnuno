@@ -534,31 +534,6 @@ section{ position: relative; z-index: 1; }
   color: var(--text-faint);
   margin-bottom: 22px;
 }
-.venues-list{
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px 14px;
-}
-.venues-list span{
-  font-size: .82rem;
-  letter-spacing: .03em;
-  color: var(--text-muted);
-  padding: 9px 18px;
-  border: 1px solid var(--line-strong);
-  border-radius: 20px;
-  white-space: nowrap;
-  cursor: default;
-  transition: transform .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease);
-}
-.venues-list span:hover,
-.venues-list span:focus-visible{
-  transform: scale(1.07);
-  border-color: var(--accent);
-  color: var(--accent-bright);
-  box-shadow: 0 0 0 1px var(--accent), 0 0 18px rgba(201,162,75,.45);
-}
-
 /* Reusable pill chips (event/service "adaptado a" lists, Get Wild catalog) */
 .chip-list{
   display: flex;
