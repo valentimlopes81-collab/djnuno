@@ -24,7 +24,8 @@ images/
   fotos/
     hero/            → hero-dj.jpg              (banner principal, 1 foto)
     bio/             → retrato.jpg              (biografia, 1 foto)
-    galeria/         → 18 espaços — ver images/fotos/galeria/README.md para a lista de nomes
+    galeria/         → 22 espaços — ver images/fotos/galeria/README.md para a lista de nomes
+                        (por-organizar/ → fotos reais enviadas ainda sem venue confirmado)
     eventos/         → carrossel das 3 secções de eventos.html — casamentos-01.jpg a 05,
                         corporativos-01.jpg a 05, sociais-01.jpg a 05
     servicos/        → carrossel das 3 secções de servicos.html — dj-musico-01.jpg a 05,
@@ -33,17 +34,18 @@ images/
 
 Cada pasta tem o seu próprio `README.md` com a lista exata de nomes de ficheiro esperados.
 
-**Sobre o logótipo:** não recebi o ficheiro que enviou — nesta sessão remota, imagens coladas na conversa não chegam até mim como ficheiro (só o texto chega). O logótipo do cabeçalho/rodapé está feito em CSS puro (fiel ao original) precisamente por isso. Para usar o ficheiro real: adicione-o a este repositório em `images/logos/` (por commit direto no GitHub, ou através de outra sessão que consiga aceder ao ficheiro) e depois avise — assim que o ficheiro estiver no repositório eu troco o logótipo em todas as páginas.
+**Sobre o logótipo:** já está a usar o ficheiro real (`images/logos/nuno-garcia-wordmark.png`, fundo removido) no cabeçalho, rodapé e hero de todas as páginas.
 
 ## O que já está pronto
 
 - Design completo (paleta preto/dourado, tipografia forte, animações de scroll).
-- Logótipo recriado em CSS puro (texto + "X" + risca diagonal), sem depender de nenhum ficheiro de imagem.
+- Logótipo real (`images/logos/nuno-garcia-wordmark.png`) no cabeçalho, rodapé e hero de todas as páginas.
 - Hero da página principal com o menu flutuante (transparente) sobreposto a uma foto de fundo, sem botões "Início" nem "Ver Galeria".
 - Biografia real, lista de espaços onde já atuou, e as 3 áreas de evento (Casamentos, Corporativos, Sociais) em `eventos.html`.
 - Serviços reais em `servicos.html`: Dupla DJ + Músico, Dupla DJ + Cantora, Audiovisuais e o catálogo completo da Get Wild Eventos.
 - Carrossel infinito de fotos (auto-scroll, pausa ao passar o rato) à direita de cada uma das 3 secções em `eventos.html` e `servicos.html`.
-- Galeria com 18 espaços de foto (um por cada espaço/venue real + genéricos), filtros por categoria e lightbox — a foto certa abre automaticamente ao clicar.
+- Galeria com 22 espaços de foto (um por cada espaço/venue real + genéricos), filtros por categoria e lightbox — a foto certa abre automaticamente ao clicar.
+- **Primeiras fotos reais já colocadas**: foto de banner (hero), retrato da biografia, 6 espaços da galeria (MAIN Lisboa ×2, BBC Lisboa, Praia Verde, B Beach Oeiras, Água Moments Vilamoura, Gala Globos de Ouro — confirmados pelo logótipo visível em cada foto) e a primeira foto da secção "Dupla DJ + Músico" em `servicos.html`. As restantes 20 fotos reais enviadas ficaram em `images/fotos/galeria/por-organizar/` à espera de confirmação de venue/evento antes de serem colocadas num espaço com nome específico.
 - Contactos reais (telefone e email) já ligados em todo o site a partir de `js/main.js`.
 - Formulário de orçamento em `contactos.html` (abre o cliente de email do visitante com os dados preenchidos).
 - Botão flutuante de WhatsApp e barra fixa de "Pedir Orçamento" no telemóvel.
@@ -54,12 +56,11 @@ Cada pasta tem o seu próprio `README.md` com a lista exata de nomes de ficheiro
 
 ## O que ainda falta para o site ficar 100% completo
 
-1. **Fotos** — ver secção acima. É o maior "falta" do site neste momento: nenhum espaço de foto tem ainda um ficheiro real.
-2. **Logótipo do DJ em ficheiro** — ver nota acima.
-3. **Restantes logótipos de clubs/hotéis** — 8 já estão no site (ver acima); faltam os das secções "Portfólio Eventos" (Tivoli, Intercontinental, Corinthia, Grupo Pestana, Grupo Sana) e mais alguns clubs (Main Lisboa, Kapital, Nuts Club, News, BBC, Paradise Garage) — ver `images/logos/clubs/README.md` para a lista completa e como enviar mais.
-4. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
-5. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
-6. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.
+1. **Fotos** — ver secção acima. Já há 8 fotos reais colocadas (hero, retrato, 6 espaços da galeria, 1 do carrossel de serviços); faltam as restantes (carrosséis de eventos.html e servicos.html, e os espaços da galeria ainda sem foto). Há mais 20 fotos reais em `images/fotos/galeria/por-organizar/` prontas a usar assim que soubermos a que venue/evento cada uma pertence.
+2. **Restantes logótipos de clubs/hotéis** — 8 já estão no site (ver acima); faltam os das secções "Portfólio Eventos" (Tivoli, Intercontinental, Corinthia, Grupo Pestana, Grupo Sana) e mais alguns clubs (Main Lisboa, Kapital, Nuts Club, News, BBC, Paradise Garage) — ver `images/logos/clubs/README.md` para a lista completa e como enviar mais.
+3. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
+4. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
+5. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.
 
 ## Estrutura
 
@@ -67,7 +68,7 @@ Cada pasta tem o seu próprio `README.md` com a lista exata de nomes de ficheiro
 index.html        → Início: hero + biografia (scroll) + Duplas & Parcerias + Galeria (teaser)
 eventos.html       → Casamentos, Eventos Corporativos, Eventos Sociais (com carrossel) + parceria Get Wild
 servicos.html      → Dupla DJ+Músico, Dupla DJ+Cantora, Audiovisuais (com carrossel), Outros Serviços
-galeria.html        → Galeria de fotos (18 espaços, filtros, lightbox)
+galeria.html        → Galeria de fotos (22 espaços, filtros, lightbox)
 contactos.html      → Formulário de orçamento + contactos
 portfolio.html       → Espaços/clubs onde já atuou (fora do menu — só link é o botão na homepage)
 css/style.css        → Todo o design do site
