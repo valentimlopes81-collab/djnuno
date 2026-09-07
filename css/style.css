@@ -548,6 +548,15 @@ section{ position: relative; z-index: 1; }
   border: 1px solid var(--line-strong);
   border-radius: 20px;
   white-space: nowrap;
+  cursor: default;
+  transition: transform .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.venues-list span:hover,
+.venues-list span:focus-visible{
+  transform: scale(1.07);
+  border-color: var(--accent);
+  color: var(--accent-bright);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 18px rgba(201,162,75,.45);
 }
 
 /* Reusable pill chips (event/service "adaptado a" lists, Get Wild catalog) */
@@ -565,6 +574,15 @@ section{ position: relative; z-index: 1; }
   border: 1px solid var(--line-strong);
   border-radius: 20px;
   white-space: nowrap;
+  cursor: default;
+  transition: transform .3s var(--ease), border-color .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease);
+}
+.chip-list span:hover,
+.chip-list span:focus-visible{
+  transform: scale(1.07);
+  border-color: var(--accent);
+  color: var(--accent-bright);
+  box-shadow: 0 0 0 1px var(--accent), 0 0 18px rgba(201,162,75,.45);
 }
 
 /* Event / service packages (eventos.html, servicos.html) */
@@ -919,13 +937,13 @@ section{ position: relative; z-index: 1; }
   background: #060606;
 }
 .footer-top{
-  display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 40px;
   padding-bottom: 50px;
 }
-@media (max-width: 860px){ .footer-top{ grid-template-columns: 1fr 1fr; } }
-@media (max-width: 520px){ .footer-top{ grid-template-columns: 1fr; } }
+@media (max-width: 520px){ .footer-top{ flex-direction: column; } }
 .footer-col h5{
   font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
   color: var(--text-faint); margin-bottom: 18px;

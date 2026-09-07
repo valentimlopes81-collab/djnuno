@@ -1,6 +1,6 @@
 # Nuno Garcia — Site do DJ
 
-Site estático (HTML/CSS/JS puro, sem build) para o DJ Nuno Garcia. Cinco páginas: `index.html` (com a biografia em scroll), `eventos.html`, `servicos.html`, `galeria.html` e `contactos.html`, com o botão **"Pedir Orçamento"** sempre visível no cabeçalho, dentro de cada secção e numa barra fixa no telemóvel.
+Site estático (HTML/CSS/JS puro, sem build) para o DJ Nuno Garcia. Cinco páginas no menu principal — `index.html` (com a biografia em scroll), `eventos.html`, `servicos.html`, `galeria.html` e `contactos.html` — mais uma sexta página, `portfolio.html`, que existe mas **não está no menu** (só é acessível pelo botão "Portfólio Completo" na secção de biografia da página principal). O botão **"Pedir Orçamento"** está sempre visível no cabeçalho, dentro de cada secção e numa barra fixa no telemóvel.
 
 ## Como ver o site localmente
 
@@ -19,6 +19,8 @@ Todos os espaços de foto do site já estão prontos a usar — basta colocar o 
 ```
 images/
   logos/            → ficheiro do logótipo original (ver nota abaixo)
+    clubs/           → logótipos PNG dos clubs/espaços (para substituir os botões de texto
+                        em "Já atuou em espaços como" e em portfolio.html — ver README dessa pasta)
   fotos/
     hero/            → hero-dj.jpg              (banner principal, 1 foto)
     bio/             → retrato.jpg              (biografia, 1 foto)
@@ -45,14 +47,18 @@ Cada pasta tem o seu próprio `README.md` com a lista exata de nomes de ficheiro
 - Contactos reais (telefone e email) já ligados em todo o site a partir de `js/main.js`.
 - Formulário de orçamento em `contactos.html` (abre o cliente de email do visitante com os dados preenchidos).
 - Botão flutuante de WhatsApp e barra fixa de "Pedir Orçamento" no telemóvel.
+- Animação de brilho + zoom ao passar o rato (ou focar) nos botões tipo "pill" (a lista de espaços e os catálogos da Get Wild Eventos).
+- Rodapé simplificado: só logótipo/redes sociais e contacto (sem as colunas de navegação e serviços repetidas).
+- Página `portfolio.html` com todos os espaços/clubs, fora do menu principal — só acessível pelo botão "Portfólio Completo".
 
 ## O que ainda falta para o site ficar 100% completo
 
 1. **Fotos** — ver secção acima. É o maior "falta" do site neste momento: nenhum espaço de foto tem ainda um ficheiro real.
 2. **Logótipo em ficheiro** — ver nota acima.
-3. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
-4. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
-5. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.
+3. **Logótipos dos clubs/espaços** — quando tiver os PNGs em `images/logos/clubs/`, avise para trocarmos os botões de texto ("Main Lisboa", "Kapital Lisboa", etc.) por estes logótipos, na página principal e em `portfolio.html`.
+4. **Link da Get Wild Eventos** — em `servicos.html` e `eventos.html` há uma referência à Get Wild Eventos, mas não tínhamos o URL real do site. Defina-o em `js/main.js`, na linha `getwildUrl` dentro de `SITE_CONFIG` (o botão "Visitar Get Wild Eventos" fica inativo até lá).
+5. **Redes sociais** — `js/main.js` (`SITE_CONFIG.instagram` / `.facebook`) ainda aponta para handles genéricos (`djnunogarcia`); confirme se estão corretos.
+6. **Testemunhos** — a secção de testemunhos com citações de clientes foi removida (eram exemplos fictícios, e não é correto publicar avaliações inventadas atribuídas a clientes que não existem). Se quiser reintroduzi-la, use apenas avaliações reais de clientes.
 
 ## Estrutura
 
@@ -62,6 +68,7 @@ eventos.html       → Casamentos, Eventos Corporativos, Eventos Sociais (com ca
 servicos.html      → Dupla DJ+Músico, Dupla DJ+Cantora, Audiovisuais (com carrossel), Outros Serviços
 galeria.html        → Galeria de fotos (18 espaços, filtros, lightbox)
 contactos.html      → Formulário de orçamento + contactos
+portfolio.html       → Espaços/clubs onde já atuou (fora do menu — só link é o botão na homepage)
 css/style.css        → Todo o design do site
 js/main.js            → Menu, animações, formulário, lightbox, config de contactos (SITE_CONFIG)
 images/               → Ver "Onde adicionar as fotos" acima
