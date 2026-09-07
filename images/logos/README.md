@@ -1,5 +1,5 @@
 # Logótipo
 
-Coloque aqui os ficheiros do logótipo original (ex: `logo.png`, `logo-branco.png`, `favicon.png`).
+`nuno-garcia-wordmark.png` — o logótipo real, já em uso no cabeçalho, rodapé e hero de todas as páginas (fundo preto removido, guardado com transparência).
 
-O logótipo do cabeçalho e rodapé está atualmente feito em CSS puro (não depende de nenhuma imagem). Depois de adicionar o ficheiro aqui, avise para trocarmos o logótipo em CSS pelo ficheiro real em todas as páginas.
+Para trocar por uma versão diferente (ex: uma variante de favicon), substitua o ficheiro `nuno-garcia-wordmark.png` mantendo o mesmo nome, ou avise para atualizarmos a referência.

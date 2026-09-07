@@ -1,7 +1,5 @@
 # Foto do banner principal (hero)
 
-Coloque aqui o ficheiro **`hero-dj.jpg`** (ou `.png`/`.webp`, mas mantenha o nome `hero-dj` — se usar outra extensão, avise para ajustar o CSS).
+`hero-dj.jpg` já está em uso como fundo do banner principal em `index.html`.
 
-Assim que o ficheiro existir neste caminho, aparece automaticamente como fundo do banner principal em `index.html` — não é preciso alterar nenhum código.
-
-Sugestão: foto horizontal (paisagem), boa resolução (pelo menos 1920px de largura), com o Nuno em destaque mas com espaço "vazio" perto do topo (fica por baixo do menu e do texto).
+**Nota sobre a resolução:** o ficheiro atual é uma das fotos reais enviadas, mas em baixa resolução (592×394px) — vai aparecer com alguma suavidade/perda de nitidez em ecrãs grandes, porque o banner ocupa a largura toda do ecrã. Se tiver uma versão em maior resolução da mesma foto (ou outra), substitua o ficheiro mantendo o mesmo nome — o ideal é pelo menos 1920px de largura.

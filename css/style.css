@@ -115,52 +115,19 @@ section{ position: relative; z-index: 1; }
 @media (max-width: 720px){ .section-pad{ padding: 84px 0; } }
 
 /* ==========================================================================
-   Logo (built with CSS — no image asset required)
+   Logo (real wordmark image — images/logos/nuno-garcia-wordmark.png)
    ========================================================================== */
 .logo{
   display: inline-flex;
   align-items: center;
-  gap: 10px;
   white-space: nowrap;
 }
-.logo-word{
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  letter-spacing: .03em;
-  color: var(--text);
-  line-height: 1;
+.logo-img{
+  display: block;
+  height: 30px;
+  width: auto;
 }
-.logo-x{
-  position: relative;
-  width: 20px;
-  height: 20px;
-  flex: none;
-}
-.logo-x::before,
-.logo-x::after{
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 4px;
-  height: 26px;
-  background: var(--accent);
-  transform-origin: center;
-}
-.logo-x::before{ transform: translate(-50%,-50%) rotate(45deg); }
-.logo-x::after{ transform: translate(-50%,-50%) rotate(-45deg); }
-.logo-stripes{
-  width: 14px;
-  height: 22px;
-  flex: none;
-  background:
-    linear-gradient(115deg, transparent 0 42%, var(--text) 42% 54%, transparent 54% 100%),
-    linear-gradient(115deg, transparent 0 62%, var(--text) 62% 74%, transparent 74% 100%);
-}
-.logo.logo-lg .logo-word{ font-size: clamp(2.6rem, 9vw, 6.2rem); }
-.logo.logo-lg .logo-x{ width: clamp(22px, 4vw, 40px); height: clamp(22px, 4vw, 40px); }
-.logo.logo-lg .logo-x::before, .logo.logo-lg .logo-x::after{ height: clamp(26px, 5vw, 48px); width: clamp(4px,.9vw,7px); }
-.logo.logo-lg .logo-stripes{ width: clamp(14px,2.6vw,26px); height: clamp(22px,4vw,40px); }
+.logo.logo-lg .logo-img{ height: clamp(48px, 9vw, 108px); }
 
 /* ==========================================================================
    Buttons
@@ -579,17 +546,23 @@ section{ position: relative; z-index: 1; }
   text-decoration: none;
 }
 .logo-tile-box .logo-tile-plus{
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  display: block;
   width: 100%;
   height: 100%;
-  line-height: 1;
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 5.5rem;
-  color: var(--accent);
 }
+.logo-tile-box .logo-tile-plus::before,
+.logo-tile-box .logo-tile-plus::after{
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  background: var(--accent);
+  transform: translate(-50%, -50%);
+  transition: background-color .3s var(--ease);
+}
+.logo-tile-box .logo-tile-plus::before{ width: 48px; height: 9px; }
+.logo-tile-box .logo-tile-plus::after{ width: 9px; height: 48px; }
 .logo-tile-box.is-plus{
   border-color: transparent;
   background-color: transparent;
@@ -598,12 +571,13 @@ section{ position: relative; z-index: 1; }
 .logo-tile:focus-visible .logo-tile-box.is-plus{
   border-color: transparent;
   box-shadow: none;
-}
-.logo-tile:hover .logo-tile-plus,
-.logo-tile:focus-visible .logo-tile-plus{
-  color: var(--accent-bright);
   transform: scale(1.15);
-  transition: transform .3s var(--ease), color .3s var(--ease);
+}
+.logo-tile:hover .logo-tile-plus::before,
+.logo-tile:hover .logo-tile-plus::after,
+.logo-tile:focus-visible .logo-tile-plus::before,
+.logo-tile:focus-visible .logo-tile-plus::after{
+  background: var(--accent-bright);
 }
 .logo-tile-box{
   width: 100%;
