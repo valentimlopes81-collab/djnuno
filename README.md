@@ -49,7 +49,7 @@ Cada pasta tem o seu próprio `README.md` com a lista exata de nomes de ficheiro
 - Botão flutuante de WhatsApp e barra fixa de "Pedir Orçamento" no telemóvel.
 - Animação de brilho + zoom ao passar o rato (ou focar) nos botões tipo "pill" (a lista de espaços e os catálogos da Get Wild Eventos).
 - Rodapé simplificado: só logótipo/redes sociais e contacto (sem as colunas de navegação e serviços repetidas).
-- Página `portfolio.html` com todos os espaços/clubs, fora do menu principal — só acessível pelo botão "Portfólio Completo".
+- Página `portfolio.html`, fora do menu principal (só acessível pelo botão "Portfólio Completo"), com duas secções — **Portfólio Eventos** (restaurantes, hotéis e eventos de marca) e **Portfólio Clubbing** (clubs por década) — cada uma com um espaço de logótipos para os parceiros/espaços mais importantes.
 
 ## O que ainda falta para o site ficar 100% completo
 
