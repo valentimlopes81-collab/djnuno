@@ -296,6 +296,137 @@ section{ position: relative; z-index: 1; }
 }
 
 /* ==========================================================================
+   Mini-player (header, PC only for now — mobile gets its own pass later)
+   ========================================================================== */
+.header-start{ display: flex; align-items: center; gap: 16px; }
+
+.mini-player{ position: relative; display: flex; align-items: center; }
+.mini-player[hidden]{ display: none !important; }
+@media (max-width: 900px){
+  .mini-player{ display: none !important; }
+}
+
+.mp-toggle{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--surface-solid);
+  position: relative;
+  overflow: visible;
+  flex-shrink: 0;
+}
+.mp-toggle-cover{
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.mp-toggle-dot{
+  position: absolute;
+  top: -2px; right: -2px;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--text-faint);
+  border: 2px solid var(--bg);
+  transition: background .2s;
+}
+.mini-player.is-playing .mp-toggle-dot{
+  background: var(--accent-bright);
+  box-shadow: 0 0 8px rgba(232,200,118,.7);
+}
+.mini-player.is-open .mp-toggle{ display: none; }
+
+.mp-panel{
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  z-index: 50;
+  width: 440px;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(20,20,20,.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 12px 32px rgba(0,0,0,.5);
+}
+.mini-player.is-open .mp-panel{ display: flex; }
+
+.mp-row{ display: flex; align-items: center; gap: 10px; }
+.mp-cover{ width: 46px; height: 46px; border-radius: 8px; object-fit: cover; flex-shrink: 0; }
+.mp-info{ min-width: 0; flex: 1 1 auto; display: flex; flex-direction: column; }
+.mp-title, .mp-artist{ white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mp-title{ font-size: .82rem; font-weight: 700; }
+.mp-artist{ font-size: .72rem; color: var(--text-muted); }
+
+.mp-controls{ display: flex; align-items: center; gap: 2px; flex-shrink: 0; }
+.mp-btn{
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none; border-radius: 50%;
+  color: var(--text-muted);
+}
+.mp-btn:hover{ color: var(--text); }
+.mp-btn svg{ width: 16px; height: 16px; }
+.mp-btn-play{
+  width: 34px; height: 34px;
+  background: var(--surface-solid);
+  border: 1px solid var(--line-strong);
+  color: var(--text);
+}
+.mp-btn-play svg{ width: 18px; height: 18px; }
+
+.mp-volume{ display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+.mp-vol-icon{ width: 15px; height: 15px; color: var(--text-faint); flex-shrink: 0; }
+.mp-vol-slider{ width: 56px; }
+
+.mp-close{
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none;
+  color: var(--text-faint);
+  font-size: .85rem;
+  flex-shrink: 0;
+}
+.mp-close:hover{ color: var(--text); }
+
+.mp-seek-row{ display: flex; align-items: center; gap: 8px; }
+.mp-time{ font-size: .68rem; color: var(--text-faint); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+.mp-seek{ flex: 1 1 auto; }
+
+.mini-player input[type="range"]{
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,.15);
+  outline: none;
+}
+.mp-seek{
+  background: linear-gradient(to right, var(--accent) var(--mp-fill, 0%), rgba(255,255,255,.15) var(--mp-fill, 0%));
+}
+.mini-player input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance: none;
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  background: var(--text);
+  cursor: pointer;
+}
+.mini-player input[type="range"]::-moz-range-thumb{
+  width: 11px; height: 11px;
+  border: none;
+  border-radius: 50%;
+  background: var(--text);
+  cursor: pointer;
+}
+
+/* ==========================================================================
    Hero
    ========================================================================== */
 .hero{
