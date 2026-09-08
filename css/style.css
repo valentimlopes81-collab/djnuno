@@ -865,6 +865,7 @@ section{ position: relative; z-index: 1; }
   transition: border-color .25s var(--ease), color .25s var(--ease), transform .25s var(--ease);
 }
 .djset-logo:hover{ border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.djset-logo img{ max-width: 62%; max-height: 56%; width: auto; height: auto; object-fit: contain; }
 
 /* Lightbox */
 .lightbox{
