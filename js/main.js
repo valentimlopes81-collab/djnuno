@@ -128,6 +128,8 @@ function initLightbox() {
 function initGalleryFilter() {
   const filterBar = document.querySelector(".gallery-filters");
   const items = document.querySelectorAll(".gallery-item");
+  const grid = document.querySelector(".gallery-grid");
+  const djPanel = document.querySelector(".djsets-panel");
   if (!filterBar || !items.length) return;
 
   filterBar.addEventListener("click", (e) => {
@@ -136,6 +138,17 @@ function initGalleryFilter() {
     filterBar.querySelectorAll("[data-filter]").forEach((b) => b.classList.remove("is-active"));
     btn.classList.add("is-active");
     const filter = btn.dataset.filter;
+
+    // "DJ Sets" is a separate panel (YouTube links, not photos): show it only
+    // when its own tab is selected, and never mix its content into "Todos".
+    if (filter === "djsets") {
+      if (grid) grid.hidden = true;
+      if (djPanel) djPanel.hidden = false;
+      return;
+    }
+    if (grid) grid.hidden = false;
+    if (djPanel) djPanel.hidden = true;
+
     items.forEach((item) => {
       const match = filter === "all" || item.dataset.category === filter;
       item.style.display = match ? "" : "none";
