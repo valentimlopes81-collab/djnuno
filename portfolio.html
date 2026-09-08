@@ -11,7 +11,47 @@
 
 <header class="site-header">
   <div class="container">
-    <a href="index.html" class="logo"><img src="/images/logos/nuno-garcia-wordmark.png" alt="Nuno Garcia" class="logo-img"></a>
+    <div class="header-start">
+      <div class="mini-player" id="mini-player" hidden>
+        <button type="button" class="mp-toggle" id="mpToggle" aria-label="Abrir leitor de música" aria-expanded="false">
+          <img class="mp-toggle-cover" id="mpToggleCover" src="/images/audio-cover-placeholder.svg" alt="">
+          <span class="mp-toggle-dot"></span>
+        </button>
+        <div class="mp-panel" id="mpPanel">
+          <div class="mp-row">
+            <img class="mp-cover" id="mpCover" src="/images/audio-cover-placeholder.svg" alt="">
+            <div class="mp-info">
+              <strong class="mp-title" id="mpTitle">—</strong>
+              <span class="mp-artist">Nuno Garcia</span>
+            </div>
+            <div class="mp-controls">
+              <button type="button" class="mp-btn" data-mp="prev" aria-label="Faixa anterior">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/></svg>
+              </button>
+              <button type="button" class="mp-btn mp-btn-play" data-mp="playpause" aria-label="Reproduzir">
+                <svg id="mpIconPlay" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg id="mpIconPause" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <button type="button" class="mp-btn" data-mp="next" aria-label="Faixa seguinte">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6z"/></svg>
+              </button>
+            </div>
+            <div class="mp-volume">
+              <svg class="mp-vol-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+              <input type="range" class="mp-vol-slider" id="mpVolume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume">
+            </div>
+            <button type="button" class="mp-close" data-mp="close" aria-label="Fechar leitor">✕</button>
+          </div>
+          <div class="mp-seek-row">
+            <span class="mp-time" id="mpCurrentTime">0:00</span>
+            <input type="range" class="mp-seek" id="mpSeek" min="0" max="1000" value="0" aria-label="Progresso">
+            <span class="mp-time" id="mpDuration">0:00</span>
+          </div>
+        </div>
+        <audio id="mpAudio" preload="metadata"></audio>
+      </div>
+      <a href="index.html" class="logo"><img src="/images/logos/nuno-garcia-wordmark.png" alt="Nuno Garcia" class="logo-img"></a>
+    </div>
     <nav class="nav-primary">
       <ul class="nav-links">
         <li><a href="eventos.html" data-page="eventos.html">Eventos</a></li>
@@ -282,5 +322,6 @@
 </div>
 
 <script src="js/main.js"></script>
+<script src="js/player.js"></script>
 </body>
 </html>
