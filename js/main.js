@@ -9,6 +9,9 @@ const SITE_CONFIG = {
   whatsappNumber: "351918731114", // digits only, country code first, no + or spaces
   instagram: "https://instagram.com/djnunogarcia",
   facebook: "https://facebook.com/djnunogarcia",
+  x: "https://x.com/djnunogarcia",
+  linkedin: "https://www.linkedin.com/in/nunomgarcia?originalSubdomain=pt",
+  youtube: "https://www.youtube.com/djnunogarcia",
   city: "Lisboa, Portugal",
   // TODO: set the real Get Wild Eventos website URL here once confirmed.
   getwildUrl: ""
@@ -194,6 +197,9 @@ function initWhatsAppLinks() {
   });
   document.querySelectorAll("[data-instagram-link]").forEach((el) => (el.href = SITE_CONFIG.instagram));
   document.querySelectorAll("[data-facebook-link]").forEach((el) => (el.href = SITE_CONFIG.facebook));
+  document.querySelectorAll("[data-x-link]").forEach((el) => (el.href = SITE_CONFIG.x));
+  document.querySelectorAll("[data-linkedin-link]").forEach((el) => (el.href = SITE_CONFIG.linkedin));
+  document.querySelectorAll("[data-youtube-link]").forEach((el) => (el.href = SITE_CONFIG.youtube));
   document.querySelectorAll("[data-city]").forEach((el) => (el.textContent = SITE_CONFIG.city));
   document.querySelectorAll("[data-getwild-link]").forEach((el) => {
     if (SITE_CONFIG.getwildUrl) {

@@ -465,13 +465,14 @@ section{ position: relative; z-index: 1; }
 .bio-text p{ color: var(--text-muted); margin-bottom: 16px; font-size: 1.02rem; }
 .bio-stats{
   display: grid;
-  grid-template-columns: repeat(4, auto);
-  gap: 30px;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 30px 44px;
   margin-top: 38px;
   padding-top: 32px;
   border-top: 1px solid var(--line);
 }
-@media (max-width: 640px){ .bio-stats{ grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 640px){ .bio-stats{ grid-template-columns: repeat(2,1fr); justify-content: stretch; } }
 .bio-stats strong{
   display: block;
   font-family: var(--font-display);
@@ -1004,6 +1005,54 @@ section{ position: relative; z-index: 1; }
 .footer-col ul a{ color: var(--text-muted); font-size: .92rem; transition: color .2s; }
 .footer-col ul a:hover{ color: var(--accent); }
 .footer-logo{ margin-bottom: 18px; }
+
+/* Trust badges (Google Reviews + Zankyou) in the middle of the footer */
+.footer-trust{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 34px 0;
+  border-top: 1px solid var(--line);
+}
+.trust-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 20px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.02);
+  text-decoration: none;
+  transition: border-color .25s var(--ease), transform .25s var(--ease), background .25s var(--ease);
+}
+.trust-badge:hover,
+.trust-badge:focus-visible{
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  background: rgba(201,162,75,.06);
+}
+.trust-badge svg{ width: 24px; height: 24px; flex: none; }
+.trust-zk{
+  flex: none;
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: #3fb6ac;
+  color: #06302c;
+  font-weight: 800;
+  font-size: .95rem;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1;
+}
+.trust-text{ display: flex; flex-direction: column; line-height: 1.2; }
+.trust-kicker{
+  font-size: .6rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--text-faint);
+}
+.trust-text strong{ font-size: .9rem; color: var(--text); font-weight: 600; letter-spacing: .01em; }
+.trust-stars{ color: var(--accent); font-size: .78rem; letter-spacing: .1em; }
+
 .footer-bottom{
   display: flex; justify-content: space-between; align-items: center;
   padding-top: 26px; border-top: 1px solid var(--line);
@@ -1011,6 +1060,15 @@ section{ position: relative; z-index: 1; }
   flex-wrap: wrap; gap: 12px;
 }
 .footer-bottom a:hover{ color: var(--accent); }
+.footer-bottom-right{ display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+/* Livro de Reclamações — deliberately discreet, tucked in the corner */
+.footer-lr{
+  font-size: .72rem;
+  color: var(--text-faint);
+  opacity: .68;
+  transition: color .2s, opacity .2s;
+}
+.footer-lr:hover{ color: var(--accent); opacity: 1; }
 
 /* ==========================================================================
    Floating helpers: WhatsApp + mobile sticky CTA + back to top
