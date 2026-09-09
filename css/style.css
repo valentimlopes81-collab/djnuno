@@ -307,7 +307,12 @@ section{ position: relative; z-index: 1; }
   .header-start{ padding-left: 0; }
 }
 
-.mini-player{ position: absolute; left: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; }
+/* Fixed 44x44 box (matching the toggle circle) regardless of which child is
+   visible — without this, when the panel opens and becomes the only visible
+   child, the container's own box grows to the panel's height and the
+   top:50%/translateY(-50%) centering (needed to align the toggle within the
+   header) drags the whole panel upward, overlapping the logo above it. */
+.mini-player{ position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; }
 .mini-player[hidden]{ display: none !important; }
 @media (max-width: 900px){
   .mini-player{ display: none !important; }
@@ -501,18 +506,15 @@ section{ position: relative; z-index: 1; }
   margin: 0 auto;
 }
 .hero .logo{ justify-content: center; margin-bottom: 26px; }
-.hero-tagline{
-  font-size: clamp(1.05rem, 2vw, 1.35rem);
-  color: var(--text-muted);
-  max-width: 46ch;
-  margin: 22px auto 0;
-}
 .hero-actions{
   display: flex;
   gap: 18px;
   justify-content: center;
   margin-top: 42px;
   flex-wrap: wrap;
+}
+@media (max-width: 900px){
+  .hero-actions{ display: none; }
 }
 .hero-meta{
   margin-top: 64px;
@@ -521,9 +523,20 @@ section{ position: relative; z-index: 1; }
   gap: 46px;
   flex-wrap: wrap;
 }
+@media (max-width: 640px){
+  .hero-meta{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px 14px;
+    max-width: 380px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
 .hero-meta div{ text-align: center; }
 .hero-meta strong{
   display: block;
+  text-shadow: 0 1px 6px rgba(0,0,0,.8);
   font-family: var(--font-display);
   font-size: 2rem;
   color: var(--accent);
@@ -533,7 +546,11 @@ section{ position: relative; z-index: 1; }
   font-size: .72rem;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-muted);
+  text-shadow: 0 1px 4px rgba(0,0,0,.9);
+}
+@media (max-width: 640px){
+  .hero-meta span{ font-size: .62rem; letter-spacing: .06em; }
 }
 .scroll-cue{
   position: absolute;
@@ -641,7 +658,11 @@ section{ position: relative; z-index: 1; }
   padding-top: 32px;
   border-top: 1px solid var(--line);
 }
-@media (max-width: 640px){ .bio-stats{ grid-template-columns: repeat(2,1fr); justify-content: stretch; } }
+@media (max-width: 640px){
+  .bio-stats{ grid-template-columns: repeat(3,1fr); justify-content: stretch; gap: 20px 12px; }
+  .bio-stats strong{ font-size: 1.6rem; }
+  .bio-stats span{ font-size: .6rem; letter-spacing: .04em; }
+}
 .bio-stats strong{
   display: block;
   font-family: var(--font-display);
@@ -1133,6 +1154,11 @@ section{ position: relative; z-index: 1; }
   grid-template-columns: 1fr 1fr;
   gap: 60px;
 }
+/* Grid items default to min-width:auto, so they refuse to shrink below their
+   content's min-content size — a <select>/<input type=date> can push that
+   past the viewport on narrow screens and force horizontal overflow even
+   though everything inside uses width:100%. */
+.contact-grid > *{ min-width: 0; }
 @media (max-width: 900px){ .contact-grid{ grid-template-columns: 1fr; gap: 48px; } }
 
 #orcamento-form{ scroll-margin-top: calc(var(--header-h) + 24px); }
@@ -1159,6 +1185,7 @@ section{ position: relative; z-index: 1; }
   outline: none; border-color: var(--accent);
 }
 .field-row{ display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.field-row > .field{ min-width: 0; }
 @media (max-width: 520px){ .field-row{ grid-template-columns: 1fr; } }
 .form-note{ font-size: .82rem; color: var(--text-faint); margin-top: 6px; }
 .form-status{ margin-top: 16px; font-size: .88rem; color: var(--accent); min-height: 1.4em; }
