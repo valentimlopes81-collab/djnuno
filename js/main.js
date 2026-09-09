@@ -169,13 +169,32 @@ function initContactForm() {
     return y && m && d ? `${d}/${m}/${y}` : iso;
   };
 
+  // "Outro" in Tipo de Evento reveals a free-text field so the visitor can
+  // say what it actually is instead of being stuck with a generic label.
+  const tipoEventoSelect = document.querySelector("#tipo_evento");
+  const tipoEventoOutroField = document.querySelector("#tipoEventoOutroField");
+  const tipoEventoOutroInput = document.querySelector("#tipo_evento_outro");
+  if (tipoEventoSelect && tipoEventoOutroField) {
+    const syncOutroField = () => {
+      const isOutro = tipoEventoSelect.value === "Outro";
+      tipoEventoOutroField.hidden = !isOutro;
+      if (!isOutro && tipoEventoOutroInput) tipoEventoOutroInput.value = "";
+    };
+    tipoEventoSelect.addEventListener("change", syncOutroField);
+    syncOutroField();
+  }
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const data = new FormData(form);
     const nome = data.get("nome") || "";
     const emailCliente = data.get("email") || "";
     const telefone = data.get("telefone") || notFilled;
-    const tipoEvento = data.get("tipo_evento") || "";
+    let tipoEvento = data.get("tipo_evento") || "";
+    const tipoEventoOutro = (data.get("tipo_evento_outro") || "").trim();
+    if (tipoEvento === "Outro" && tipoEventoOutro) {
+      tipoEvento = `Outro — ${tipoEventoOutro}`;
+    }
     const dataEvento = formatDate(data.get("data_evento"));
     const localizacao = data.get("localizacao") || notFilled;
     const mensagem = data.get("mensagem") || notFilled;
