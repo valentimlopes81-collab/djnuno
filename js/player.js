@@ -6,9 +6,28 @@
    Vazia por omissão — o leitor fica escondido em todo o site até se
    acrescentar aqui a primeira faixa. Ver audio/README.md para o passo a
    passo (colocar o mp3 em audio/tracks/, a capa em audio/covers/, e
-   acrescentar uma linha aqui). */
+   acrescentar uma linha aqui). A ordem aqui não importa: a ordem de
+   reprodução é baralhada de novo em cada nova visita (ver mais abaixo). */
 const PLAYER_TRACKS = [
-  // { file: "nome-do-ficheiro.mp3", cover: "nome-da-capa.jpg", title: "Nome da Faixa" },
+  { file: "ANOTR, 54 Ultra - Talk To You (Oscar Velazquez House Mix) FREE DOWNLOAD.mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Talk To You" },
+  { file: "Calling to Blame, Scared To Be Lonely (Nuno Garcia Mashup Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Calling to Blame / Scared to Be Lonely" },
+  { file: "DJ Nuno Garcia - Amor (Original Tech Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Amor" },
+  { file: "FREE DL_ Shimza, AR_CO & Kasango - Fire Fire (Berat OZ & Orhan Aydin Remix) [MDM024].mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Fire Fire (Berat Öz Remix)" },
+  { file: "Forget The World (DJ Nuno Garcia Dub Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Forget The World (Dub Mix)" },
+  { file: "Forget the World (DJ Nuno Garcia Main Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Forget The World (Main Mix)" },
+  { file: "HUGEL X Topic X Arash Feat. Daecolm - I Adore You (Loup Musa Remix) (Filtered Version).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "I Adore You" },
+  { file: "Insomnia To Voices in My Head (Nuno Garcia Bootleg Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Insomnia / Voices in My Head" },
+  { file: "Let You Down in The Magic Room (Nuno Garcia Bootleg Original Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Let You Down in The Magic Room" },
+  { file: "Music is The Answer ( Nuno Garcia Remix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Music Is The Answer" },
+  { file: "Preach (You Make It) (Nuno Garcia Main Club Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Preach (You Make It)" },
+  { file: "Rampa - The Church (Luch 4_4 Re-Touch).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "The Church" },
+  { file: "Rapture To Mystify (Nuno Garcia Mashup Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Rapture / Mystify" },
+  { file: "Return To Oz To Back To Black (Nuno Garcia Reconstruction Mix ).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Return to Oz / Back to Black" },
+  { file: "Santti & Malifoo Feat. Tryce - Lovezinho (Nuno Garcia Reconstruction extended Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Lovezinho" },
+  { file: "Secret ID VS Besito Coca Cola (Nuno Garcia Mashup Mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Secret ID vs. Besito Coca Cola" },
+  { file: "Shimza x AR_CO x Kasango - Fire Fire (millforlife Remix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Fire Fire (millforlife Remix)" },
+  { file: "Thriller (Halloween Nuno Garcia Reconstruction mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "Thriller (Halloween Mix)" },
+  { file: "World, Hold On, Si Antes Te Hubiera Conocido (Nuno Garcia Reconstruction mix).mp3", cover: "Captura de ecrã 2026-09-09 010153.png", title: "World Hold On / Si Antes Te Hubiera Conocido" },
 ];
 
 (function () {
@@ -16,6 +35,7 @@ const PLAYER_TRACKS = [
   const COVERS_BASE = "/audio/covers/";
   const DEFAULT_COVER = "/images/audio-cover-placeholder.svg";
   const STORAGE_KEY = "djng_player_state_v1";
+  const ORDER_KEY = "djng_player_order_v1";
 
   let state = {
     trackIndex: 0,
@@ -25,13 +45,42 @@ const PLAYER_TRACKS = [
     expanded: false,
   };
 
-  function loadState() {
+  /* Ordem de reprodução: baralhada uma vez por visita (sessionStorage — dura
+     enquanto o separador estiver aberto, mesmo mudando de página; uma nova
+     visita, ou um novo separador, gera uma ordem nova). */
+  function getPlaylist() {
+    let order = null;
+    try {
+      const raw = sessionStorage.getItem(ORDER_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length === PLAYER_TRACKS.length) order = parsed;
+      }
+    } catch (e) {
+      /* segue sem sessionStorage */
+    }
+    if (!order) {
+      order = PLAYER_TRACKS.map((_, i) => i);
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      try {
+        sessionStorage.setItem(ORDER_KEY, JSON.stringify(order));
+      } catch (e) {
+        /* ignora — não é crítico */
+      }
+    }
+    return order.map((i) => PLAYER_TRACKS[i]);
+  }
+
+  function loadState(playlistLength) {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) return;
       const saved = JSON.parse(raw);
       state = Object.assign({}, state, saved);
-      if (state.trackIndex < 0 || state.trackIndex >= PLAYER_TRACKS.length) {
+      if (state.trackIndex < 0 || state.trackIndex >= playlistLength) {
         state.trackIndex = 0;
       }
     } catch (e) {
@@ -56,7 +105,8 @@ const PLAYER_TRACKS = [
 
   function init() {
     if (!PLAYER_TRACKS.length) return;
-    loadState();
+    const playlist = getPlaylist();
+    loadState(playlist.length);
 
     const player = document.getElementById("mini-player");
     if (!player) return;
@@ -104,12 +154,12 @@ const PLAYER_TRACKS = [
     }
 
     function loadTrack(index, { resumeTime = 0, autoplay = false } = {}) {
-      state.trackIndex = ((index % PLAYER_TRACKS.length) + PLAYER_TRACKS.length) % PLAYER_TRACKS.length;
-      const track = PLAYER_TRACKS[state.trackIndex];
+      state.trackIndex = ((index % playlist.length) + playlist.length) % playlist.length;
+      const track = playlist[state.trackIndex];
 
-      audio.src = TRACKS_BASE + track.file;
+      audio.src = TRACKS_BASE + encodeURIComponent(track.file);
       title.textContent = track.title || track.file;
-      const coverSrc = track.cover ? COVERS_BASE + track.cover : DEFAULT_COVER;
+      const coverSrc = track.cover ? COVERS_BASE + encodeURIComponent(track.cover) : DEFAULT_COVER;
       withFallback(cover, coverSrc);
       withFallback(toggleCover, coverSrc);
 
