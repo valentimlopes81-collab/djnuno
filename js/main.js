@@ -162,18 +162,27 @@ function initContactForm() {
   const status = document.querySelector(".form-status");
   if (!form) return;
 
+  const notFilled = "(não indicado)";
+  const formatDate = (iso) => {
+    if (!iso) return notFilled;
+    const [y, m, d] = iso.split("-");
+    return y && m && d ? `${d}/${m}/${y}` : iso;
+  };
+
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const data = new FormData(form);
     const nome = data.get("nome") || "";
     const emailCliente = data.get("email") || "";
-    const telefone = data.get("telefone") || "";
+    const telefone = data.get("telefone") || notFilled;
     const tipoEvento = data.get("tipo_evento") || "";
-    const dataEvento = data.get("data_evento") || "";
-    const localizacao = data.get("localizacao") || "";
-    const mensagem = data.get("mensagem") || "";
+    const dataEvento = formatDate(data.get("data_evento"));
+    const localizacao = data.get("localizacao") || notFilled;
+    const mensagem = data.get("mensagem") || notFilled;
 
     const subject = `Pedido de Orçamento — ${tipoEvento || "Evento"} — ${nome}`;
+    // Every field from the form goes into the body, in the same order they
+    // appear on the page, so nothing submitted is ever left out of the email.
     const body =
       `Nome: ${nome}\n` +
       `Email: ${emailCliente}\n` +

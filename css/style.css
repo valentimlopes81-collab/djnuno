@@ -297,15 +297,12 @@ section{ position: relative; z-index: 1; }
 }
 
 /* ==========================================================================
-   Mini-player (header, PC only for now — mobile gets its own pass later)
+   Mini-player (header, desktop and mobile)
    ========================================================================== */
 /* The player circle is taken out of flow (position:absolute) so it can
    never compete for space with the logo — header-start just reserves a
    fixed gutter for it with padding-left. */
 .header-start{ position: relative; display: flex; align-items: center; padding-left: 60px; }
-@media (max-width: 900px){
-  .header-start{ padding-left: 0; }
-}
 
 /* Fixed 44x44 box (matching the toggle circle) regardless of which child is
    visible — without this, when the panel opens and becomes the only visible
@@ -314,9 +311,6 @@ section{ position: relative; z-index: 1; }
    header) drags the whole panel upward, overlapping the logo above it. */
 .mini-player{ position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; }
 .mini-player[hidden]{ display: none !important; }
-@media (max-width: 900px){
-  .mini-player{ display: none !important; }
-}
 /* Chromium (and others) don't apply the UA [hidden] rule to inline <svg>
    elements, so the play/pause and volume/mute icon swaps need this spelled
    out explicitly or both icons stay visible at once. */
@@ -380,7 +374,7 @@ section{ position: relative; z-index: 1; }
   top: calc(100% + 10px);
   left: 0;
   z-index: 50;
-  width: 440px;
+  width: min(440px, calc(100vw - 56px));
   flex-direction: column;
   gap: 8px;
   padding: 12px 16px;
@@ -438,6 +432,15 @@ section{ position: relative; z-index: 1; }
   flex-shrink: 0;
 }
 .mp-close:hover{ color: var(--text); }
+
+/* Narrow phones: the volume slider is the first thing to go so the title
+   keeps enough room instead of shrinking to a couple of letters. */
+@media (max-width: 480px){
+  .mp-vol-slider{ display: none; }
+  .mp-cover{ width: 40px; height: 40px; }
+  .mp-row{ gap: 8px; }
+  .mp-controls{ gap: 0; }
+}
 
 .mp-seek-row{ display: flex; align-items: center; gap: 8px; }
 .mp-time{ font-size: .68rem; color: var(--text-faint); font-variant-numeric: tabular-nums; flex-shrink: 0; }
@@ -1180,6 +1183,11 @@ section{ position: relative; z-index: 1; }
   padding: 15px 16px;
   border-radius: var(--radius);
   transition: border-color .2s;
+  /* Without this, mobile browsers render the native date-picker UI (and its
+     calendar icon) in their light-theme default regardless of our own dark
+     colors on the input itself, so it looks broken/mismatched against the
+     dark field. */
+  color-scheme: dark;
 }
 .field input:focus, .field select:focus, .field textarea:focus{
   outline: none; border-color: var(--accent);
