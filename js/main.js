@@ -163,11 +163,6 @@ function initContactForm() {
   if (!form) return;
 
   const notFilled = "(não indicado)";
-  const formatDate = (iso) => {
-    if (!iso) return notFilled;
-    const [y, m, d] = iso.split("-");
-    return y && m && d ? `${d}/${m}/${y}` : iso;
-  };
 
   // "Outro" in Tipo de Evento reveals a free-text field so the visitor can
   // say what it actually is instead of being stuck with a generic label.
@@ -195,7 +190,7 @@ function initContactForm() {
     if (tipoEvento === "Outro" && tipoEventoOutro) {
       tipoEvento = `Outro — ${tipoEventoOutro}`;
     }
-    const dataEvento = formatDate(data.get("data_evento"));
+    const dataEvento = data.get("data_evento") || notFilled;
     const localizacao = data.get("localizacao") || notFilled;
     const mensagem = data.get("mensagem") || notFilled;
 
