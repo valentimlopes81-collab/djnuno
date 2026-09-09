@@ -117,6 +117,8 @@ const PLAYER_TRACKS = [
     const title = document.getElementById("mpTitle");
     const iconPlay = document.getElementById("mpIconPlay");
     const iconPause = document.getElementById("mpIconPause");
+    const iconVolUp = document.getElementById("mpIconVolUp");
+    const iconVolMute = document.getElementById("mpIconVolMute");
     const volumeSlider = document.getElementById("mpVolume");
     const seekSlider = document.getElementById("mpSeek");
     const currentTimeEl = document.getElementById("mpCurrentTime");
@@ -131,6 +133,15 @@ const PLAYER_TRACKS = [
       imgEl.src = src;
     };
 
+    /* SVGElement doesn't reliably reflect the .hidden IDL property to the
+       actual "hidden" attribute in every browser, so assigning el.hidden =
+       true/false silently no-ops on inline <svg> icons — toggle the
+       attribute directly instead. */
+    const setHidden = (el, isHidden) => {
+      if (isHidden) el.setAttribute("hidden", "");
+      else el.removeAttribute("hidden");
+    };
+
     function applyExpandedUI() {
       player.classList.toggle("is-open", state.expanded);
       toggle.setAttribute("aria-expanded", String(state.expanded));
@@ -138,9 +149,14 @@ const PLAYER_TRACKS = [
 
     function updatePlayIcon() {
       const playing = !audio.paused && !audio.ended;
-      iconPlay.hidden = playing;
-      iconPause.hidden = !playing;
+      setHidden(iconPlay, playing);
+      setHidden(iconPause, !playing);
       player.classList.toggle("is-playing", playing);
+    }
+
+    function updateVolIcon() {
+      setHidden(iconVolUp, audio.muted);
+      setHidden(iconVolMute, !audio.muted);
     }
 
     function updateSeekUI() {
@@ -213,9 +229,18 @@ const PLAYER_TRACKS = [
     player.querySelector('[data-mp="prev"]').addEventListener("click", prev);
     player.querySelector('[data-mp="next"]').addEventListener("click", next);
 
+    player.querySelector('[data-mp="mute"]').addEventListener("click", () => {
+      audio.muted = !audio.muted;
+      updateVolIcon();
+    });
+
     volumeSlider.addEventListener("input", () => {
       audio.volume = parseFloat(volumeSlider.value);
       state.volume = audio.volume;
+      if (audio.muted && audio.volume > 0) {
+        audio.muted = false;
+        updateVolIcon();
+      }
       saveState();
     });
 

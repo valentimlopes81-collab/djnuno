@@ -37,7 +37,10 @@
               </button>
             </div>
             <div class="mp-volume">
-              <svg class="mp-vol-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+              <button type="button" class="mp-vol-btn" data-mp="mute" aria-label="Silenciar">
+                <svg id="mpIconVolUp" class="mp-vol-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3z"/></svg>
+                <svg id="mpIconVolMute" class="mp-vol-icon" viewBox="0 0 24 24" fill="currentColor" hidden><path d="M3 9v6h4l5 5V4L7 9H3zm12.7 3L14 10.7 15.3 12 14 13.3 15.3 14.6 17 12.9l1.7 1.7 1.3-1.3-1.7-1.7L20 10l-1.3-1.3z"/></svg>
+              </button>
               <input type="range" class="mp-vol-slider" id="mpVolume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume">
             </div>
             <button type="button" class="mp-close" data-mp="close" aria-label="Fechar leitor">✕</button>
