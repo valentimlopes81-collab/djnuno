@@ -1189,6 +1189,14 @@ section{ position: relative; z-index: 1; }
      dark field. */
   color-scheme: dark;
 }
+/* input type=date (and, on some mobile browsers, select) use their own
+   internal line-height/baseline for the native value display, which makes
+   them render a different height than a plain text field even with
+   identical padding — force them all to the same explicit height. */
+.field input, .field select{
+  height: 52px;
+  line-height: 1.2;
+}
 .field input:focus, .field select:focus, .field textarea:focus{
   outline: none; border-color: var(--accent);
 }
