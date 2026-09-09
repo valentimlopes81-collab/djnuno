@@ -121,6 +121,7 @@ section{ position: relative; z-index: 1; }
   display: inline-flex;
   align-items: center;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .logo-img{
   display: block;
@@ -298,9 +299,15 @@ section{ position: relative; z-index: 1; }
 /* ==========================================================================
    Mini-player (header, PC only for now — mobile gets its own pass later)
    ========================================================================== */
-.header-start{ display: flex; align-items: center; gap: 16px; }
+/* The player circle is taken out of flow (position:absolute) so it can
+   never compete for space with the logo — header-start just reserves a
+   fixed gutter for it with padding-left. */
+.header-start{ position: relative; display: flex; align-items: center; padding-left: 60px; }
+@media (max-width: 900px){
+  .header-start{ padding-left: 0; }
+}
 
-.mini-player{ position: relative; display: flex; align-items: center; }
+.mini-player{ position: absolute; left: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; }
 .mini-player[hidden]{ display: none !important; }
 @media (max-width: 900px){
   .mini-player{ display: none !important; }
@@ -326,6 +333,26 @@ section{ position: relative; z-index: 1; }
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
+  animation: mp-spin 4s linear infinite;
+  animation-play-state: paused;
+}
+.mini-player.is-playing .mp-toggle-cover{ animation-play-state: running; }
+@keyframes mp-spin{ to{ transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce){
+  .mp-toggle-cover{ animation: none; }
+}
+/* CD sheen: faint concentric grooves + a dark spindle-hole ring, blended
+   over the cover photo so the collapsed icon reads as a spinning disc. */
+.mp-toggle::after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background:
+    radial-gradient(circle, transparent 0 13%, rgba(0,0,0,.6) 13% 16%, transparent 16% 100%),
+    repeating-radial-gradient(circle, rgba(255,255,255,.12) 0 1.5px, transparent 1.5px 4px);
+  mix-blend-mode: overlay;
 }
 .mp-toggle-dot{
   position: absolute;
@@ -387,14 +414,14 @@ section{ position: relative; z-index: 1; }
 
 .mp-volume{ display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .mp-vol-btn{
-  width: 22px; height: 22px;
+  width: 28px; height: 28px;
   display: flex; align-items: center; justify-content: center;
   background: transparent; border: none; border-radius: 50%;
-  color: var(--text-faint);
+  color: var(--text-muted);
   flex-shrink: 0;
 }
 .mp-vol-btn:hover{ color: var(--text); }
-.mp-vol-icon{ width: 15px; height: 15px; }
+.mp-vol-icon{ width: 20px; height: 20px; }
 .mp-vol-slider{ width: 56px; }
 
 .mp-close{
